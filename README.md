@@ -5,7 +5,7 @@ Unfortunately, since I haven't managed to train an appropriate model, running th
 To run use command: <code>python detector.py</code><br/>
 It accepts two arguments:<br/>
 <code>--visualize=True</code> opens the given image in a new window and draws the bounding boxes on it.</br>
-<code>--img=path-to-input-image</code> to set input image. Default is example/test.jpeg
+<code>--img=path-to-input-image</code> to set input image. Default is examples/test.jpeg
 
 # Components
 ## solver.py
