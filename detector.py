@@ -4,19 +4,8 @@ import classifier
 import solver
 import argparse
 
-def run():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--img', default='examples/test.jpeg', type=str)
-    parser.add_argument('--visualize', default=False, type=bool)
-    args = parser.parse_args()
-    detector = CharacterDetector(args.visualize)
-    img = cv.imread(args.img)
-    detector.calculate(img)
-
 class CharacterDetector():
     def __init__(self, visualize=False):
-        self.classifier = classifier.HandwritingClassifier()
-        self.solver = solver.Solver()
         self.visualize = visualize
 
     def sorted_bbox(self, contours):
@@ -29,10 +18,8 @@ class CharacterDetector():
         for cnt in contours:
             rects.append(cv.boundingRect(cnt))
             rectsUsed.append(False)
-        def getXFromRect(item):
-            return item[0]
 
-        rects.sort(key=getXFromRect)
+        rects.sort(key=lambda x: x[0])
         acceptedRects = []
         xThr = 1
         for supIdx, supVal in enumerate(rects):
@@ -60,9 +47,6 @@ class CharacterDetector():
         return acceptedRects
 
     def detect(self, img):
-        '''
-        Detects all characters in the image and passes them to the classifier to process.
-        '''
         copy = img.copy()
         gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         ret, thresh = cv.threshold(gray, 120, 255, cv.THRESH_BINARY_INV)
@@ -81,25 +65,14 @@ class CharacterDetector():
 
             if rect_area > min_area:
                 # Draw bounding box:
-                if self.visualize:
-                    color = (0, 255, 0)
-                    cv.rectangle(copy, (int(rect_x), int(rect_y)), (int(rect_x + rect_w), int(rect_y + rect_h)), color, 2)
-                    cv.imshow("Bounding Boxes", copy)
-                    cv.waitKey(1000)
+                color = (0, 255, 0)
+                cv.rectangle(copy, (int(rect_x), int(rect_y)), (int(rect_x + rect_w), int(rect_y + rect_h)), color, 2)
 
                 # Crop bounding box:
                 current_crop = gray[rect_y:rect_y + rect_h, rect_x:rect_x + rect_w]
                 crops.append(current_crop)
+        if self.visualize:
+            cv.imshow("Bounding Boxes", copy)
+            cv.waitKey(0)
         return crops;
-
-    def calculate(self, img):
-        expression = ''
-        crops = self.detect(img)
-        for crop in crops:
-            expression = expression + self.classifier.run(crop) + ' '
-        print(expression)
-        #print(self.solver.evaluate(expression))
-
-if __name__ == '__main__':
-    run()
 

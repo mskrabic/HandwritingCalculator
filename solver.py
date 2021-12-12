@@ -43,7 +43,13 @@ class Solver(object):
                 n1 = opstack.pop()
                 n2 = opstack.pop()
                 opstack.append(self.op[t](n2, n1))
+        if len(opstack) != 1:
+            raise Exception
         return opstack.pop()
 
     def evaluate(self, expression):
-        return self._evaluate(self.to_postfix(expression))
+        try:
+            result = self._evaluate(self.to_postfix(expression))
+            return result
+        except Exception:
+            print(f'Couldn\'t evaluate expression: {expression}')

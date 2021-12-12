@@ -3,6 +3,7 @@ import cv2 as cv
 import math
 import pickle
 import cv2 as cv
+import utils
 
 
 class HandwritingClassifier(object):
@@ -13,18 +14,16 @@ class HandwritingClassifier(object):
             self.model = keras.models.load_model('bestmodel.h5')
 
     def run(self, img):
-        ret, thresh = cv.threshold(img, 130, 255, cv.THRESH_BINARY_INV)
-        img = cv.resize(thresh, (28, 28), interpolation=cv.INTER_AREA)
-
-        img = img.astype(np.float32)/255
+        img = utils.prep_img(img)
+        img = img.astype(np.float32)/255.0
         img = np.expand_dims(img, -1)
+
         input = np.array([img])
-        result = self.model.predict(input)
-        for i in range(len(result)):
-            prediction = np.argmax(result[i])
-            if int(prediction) > 9:
-                prediction = self.MAP_SYMBOLS[int(prediction)]
-            else:
-                prediction = str(prediction)
+        result = self.model.predict(input)[0]
+        prediction = np.argmax(result)
+        if prediction > 9:
+            prediction = self.MAP_SYMBOLS[prediction]
+        else:
+            prediction = str(prediction)
         return prediction
 
