@@ -1,7 +1,7 @@
 # HandwritingCalculator
 An attempt to build an app for detecting and calculating handwritten math expressions.
 Unfortunately, I haven't been able to train a model with which I would be completely satisfied, but nonetheless it was a fun learning experience.
-Final implementation has trouble detecting '-', '(' and ')', but works quite well with expressions that do not use these symbols.
+Final implementation has trouble detecting '-', '(' and ')', but works quite well with expressions that do not use these symbols. Some cherry-picked examples are available in the examples folder :)
 ## Instructions
 Two ways to run:
 ### 1) CMD
