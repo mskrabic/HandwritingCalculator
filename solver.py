@@ -52,4 +52,4 @@ class Solver(object):
             result = self._evaluate(self.to_postfix(expression))
             return result
         except Exception:
-            print(f'Couldn\'t evaluate expression: {expression}')
+            return f'Couldn\'t evaluate expression.'

@@ -21,15 +21,13 @@ class Calculator():
         self.classifier = classifier.HandwritingClassifier()
 
     def calculate(self, img):
-        crops = self.detector.detect(img)
+        crops, copy, bbox = self.detector.detect(img)
         expression = ''
         for crop in crops:
             expression = expression + self.classifier.run(crop) + ' '
         result = self.solver.evaluate(expression)
-        if result is not None:
-            print(f'{expression} = {result}')
-
-
+        print(f'Expression: {expression}')
+        print(f'Result: {result}')
 
 if __name__ == '__main__':
     run()

@@ -74,5 +74,5 @@ class CharacterDetector():
         if self.visualize:
             cv.imshow("Bounding Boxes", copy)
             cv.waitKey(0)
-        return crops;
+        return crops, copy, bounding_boxes
 
