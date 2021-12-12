@@ -1,11 +1,12 @@
 import os
 from flask import Flask, render_template, request, url_for
 from flask import send_from_directory
-import time
+import sys
 
 import cv2 as cv
-import utils
 import numpy as np
+sys.path.append(os.path.abspath(".."))
+import utils
 import detector
 import classifier
 import solver
