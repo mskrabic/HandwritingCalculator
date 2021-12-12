@@ -11,8 +11,9 @@ It accepts two arguments:<br/>
 <code>--img=path-to-input-image</code> to set input image. Default is examples/test.jpeg
 
 ### 2) Flask
-Run <code>app.py</code> containing the Flask app. <br/>
+Run <code>python app.py</code> from the flask-app directory <br/>
 Simple web-page for uploading pictures of math expressions which are then fed to the CNN model.
+It runs on <code>localhost:5000</code>
 
 ## Components
 ### solver.py
